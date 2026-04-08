@@ -1,0 +1,5 @@
+Module-CheckLatestVersion-*
+.build
+*~
+nytprof*
+.DS_Store
