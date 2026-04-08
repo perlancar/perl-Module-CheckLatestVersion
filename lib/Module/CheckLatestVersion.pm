@@ -67,7 +67,7 @@ In F<Your/Module.pm>:
 
  package Your::Module;
 
- use Module::CheckVersion; # automatically exports 'check_latest_version'
+ use Module::CheckLatestVersion; # automatically exports 'check_latest_version'
 
  our $VERSION = 1.23;
  our $AUTHORITY = 'cpan:PERLANCAR';
