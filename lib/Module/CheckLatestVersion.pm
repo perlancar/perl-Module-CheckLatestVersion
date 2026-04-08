@@ -17,7 +17,7 @@ sub check_latest_version {
     return if
         $ENV{HARNESS_ACTIVE} ||
         $ENV{RELEASE_TESTING} ||
-        $ENV{AUTOMATED_TESTING} ||;
+        $ENV{AUTOMATED_TESTING} ||
         $ENV{PERL_MODULE_CHECKLATESTVERSION_SKIP};
 
     no strict 'refs'; ## no critic: TestingAndDebugging::ProhibitNoStrict
