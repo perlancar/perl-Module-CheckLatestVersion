@@ -73,9 +73,23 @@ In F<Your/Module.pm>:
  our $AUTHORITY = 'cpan:PERLANCAR';
 
  check_latest_version();
+ # check_latest_version({die=>1});
 
 If module is not the latest version (checked against authority) then a warn
 message is displayed. If the C<die> option is set, program will die.
+
+Or, alternatively, in F<your-script.pl>:
+
+ #!perl
+
+ use strict;
+ use warnings;
+ use Module::CheckLatestVersion;
+ use Your::Module;
+
+ check_latest_version("Your::Module");
+ #check_latest_version({die=>1}, "Your::Module");
+ ...
 
 
 =head1 DESCRIPTION
