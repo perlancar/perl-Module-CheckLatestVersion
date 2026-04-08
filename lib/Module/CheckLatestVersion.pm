@@ -23,7 +23,7 @@ sub check_latest_version {
 
     my $opts = ref $_[0] eq 'HASH' ? shift : {};
     my $mod = shift; $mod = caller() unless $mod;
-    $opts->{die} //= $ENV{PERL_MODULE_CHECKLATESTVERSION_DIE};
+    $opts->{die} //= $ENV{PERL_MODULE_CHECKLATESTVERSION_OPT_DIE};
 
     require Cache::File::Simple;
     my $cachekey = __PACKAGE__ . '|' . $mod;
@@ -77,6 +77,9 @@ If module is not the latest version (checked against authority) then a warn
 message is displayed. If the C<die> option is set, program will die.
 
 
+=head1 DESCRIPTION
+
+
 =head1 FUNCTIONS
 
 =head2 check_latest_version
@@ -105,7 +108,7 @@ Bool. If set to true, will die instead of warn.
 
 =head1 ENVIRONMENT
 
-=head2 PERL_MODULE_CHECKLATESTVERSION_DIE
+=head2 PERL_MODULE_CHECKLATESTVERSION_OPT_DIE
 
 Bool. Set default value for the C<die> option.
 
