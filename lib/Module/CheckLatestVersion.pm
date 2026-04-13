@@ -33,8 +33,6 @@ sub check_latest_version {
         # cache miss
         require Module::CheckVersion;
         $res = Module::CheckVersion::check_module_version(module => $mod);
-        Cache::File::Simple::cache($cachekey, $res);
-
     }
 
     if ($res->[0] != 200) {
@@ -42,7 +40,10 @@ sub check_latest_version {
         return;
     }
 
-    unless ($res->[2]{is_latest_version}) {
+    if ($res->[2]{is_latest_version}) {
+        # cache only positive result
+        Cache::File::Simple::cache($cachekey, $res);
+    } else {
         my $msg = "Module $mod (installed version: " .
             (defined($res->[2]{installed_version}) ? $res->[2]{installed_version} : "undef") .
             ") is not the latest version (" .
@@ -52,7 +53,7 @@ sub check_latest_version {
             $msg .= " Please update to the latest version first.";
             die $msg;
         } else {
-            $msg .= " Please consider updateing to the latest version.";
+            $msg .= " Please consider updating to the latest version.";
             warn $msg;
         }
     }
