@@ -3,7 +3,7 @@ package Module::CheckLatestVersion;
 use strict;
 use warnings;
 use Log::ger;
-use Log::ger::Format::Multilevel (); # for scan prereqs
+use Log::ger::Format::MultilevelLog (); # for scan prereqs
 use Log::ger::Format 'MultilevelLog';
 
 use Exporter qw(import);
