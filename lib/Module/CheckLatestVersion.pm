@@ -1,5 +1,6 @@
 package Module::CheckLatestVersion;
 
+use 5.010001;
 use strict;
 use warnings;
 use Log::ger;
@@ -17,18 +18,17 @@ use Exporter qw(import);
 our @EXPORT = qw(check_latest_version);
 
 sub check_latest_version {
-    return if
+    my $opts = ref $_[0] eq 'HASH' ? {%{shift}} : {};
+    my $mod = shift; $mod = caller() unless $mod;
+    $opts->{die} //= $ENV{PERL_MODULE_CHECKLATESTVERSION_OPT_DIE};
+    $opts->{log_level} //= 'debug';
+    $opts->{do_check} //= 0 if
         $ENV{HARNESS_ACTIVE} ||
         $ENV{RELEASE_TESTING} ||
         $ENV{AUTOMATED_TESTING} ||
         $ENV{PERL_MODULE_CHECKLATESTVERSION_SKIP};
 
     no strict 'refs'; ## no critic: TestingAndDebugging::ProhibitNoStrict
-
-    my $opts = ref $_[0] eq 'HASH' ? shift : {};
-    my $mod = shift; $mod = caller() unless $mod;
-    $opts->{die} //= $ENV{PERL_MODULE_CHECKLATESTVERSION_OPT_DIE};
-    $opts->{log_level} //= 'debug';
 
     require Cache::File::Simple;
     my $cachekey = __PACKAGE__ . '|' . $mod;
@@ -126,7 +126,7 @@ not the latest version, a warning is emitted.
 
 When one of these environment variables are set, will skip checking (no-op):
 C<HARNESS_ACTIVE>, C<RELEASE_TESTING>, C<AUTOMATED_TESTING>,
-C<PERL_MODULE_CHECKLATESTVERSION_SKIP>.
+C<PERL_MODULE_CHECKLATESTVERSION_SKIP>. Unless when C<do_check> is set to true.
 
 Options:
 
@@ -135,6 +135,16 @@ Options:
 =item * die
 
 Bool. If set to true, will die instead of warn.
+
+=item * log_level
+
+Str or number. Set the log level of log statements that inform about module
+checking.
+
+=item * do_check
+
+Bool, default is undef. Can be used to force checking or disable checking
+without regard to environment variables.
 
 =back
 
