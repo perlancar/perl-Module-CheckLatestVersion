@@ -2,6 +2,9 @@ package Module::CheckLatestVersion;
 
 use strict;
 use warnings;
+use Log::ger;
+use Log::ger::Format::Multilevel (); # for scan prereqs
+use Log::ger::Format 'MultilevelLog';
 
 use Exporter qw(import);
 
@@ -25,12 +28,15 @@ sub check_latest_version {
     my $opts = ref $_[0] eq 'HASH' ? shift : {};
     my $mod = shift; $mod = caller() unless $mod;
     $opts->{die} //= $ENV{PERL_MODULE_CHECKLATESTVERSION_OPT_DIE};
+    $opts->{log_level} //= 'debug';
 
     require Cache::File::Simple;
     my $cachekey = __PACKAGE__ . '|' . $mod;
+    log($opts->{log_level}, "Checking version of module $mod from cache ...");
     my $res = Cache::File::Simple::cache($cachekey);
     unless ($res) {
         # cache miss
+        log($opts->{log_level}, "Checking version of module $mod (cache miss) ...");
         require Module::CheckVersion;
         $res = Module::CheckVersion::check_module_version(module => $mod);
     }
@@ -41,6 +47,7 @@ sub check_latest_version {
     }
 
     if ($res->[2]{is_latest_version}) {
+        log($opts->{log_level}, "Module $mod is latest version ($res->[2]{latest_version}), caching result ...");
         # cache only positive result
         Cache::File::Simple::cache($cachekey, $res);
     } else {
