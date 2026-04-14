@@ -18,7 +18,7 @@ use Exporter qw(import);
 our @EXPORT = qw(check_latest_version);
 
 sub check_latest_version {
-    my $opts = ref $_[0] eq 'HASH' ? {%{shift}} : {};
+    my $opts = ref $_[0] eq 'HASH' ? {%{ shift()} } : {};
     my $mod = shift; $mod = caller() unless $mod;
     $opts->{die} //= $ENV{PERL_MODULE_CHECKLATESTVERSION_OPT_DIE};
     $opts->{log_level} //= 'debug';

@@ -1,6 +1,13 @@
+0.007   2026-04-14  Released-By: PERLANCAR; Urgency: medium
+
+        - Add 'do_check' option.
+
+        - [doc] Document the 'log_level' option.
+
+
 0.006   2026-04-14  Released-By: PERLANCAR; Urgency: medium
 
-        - Add logging.
+        - Add logging & 'log_level' option.
 
 
 0.005   2026-04-13  Released-By: PERLANCAR; Urgency: high
