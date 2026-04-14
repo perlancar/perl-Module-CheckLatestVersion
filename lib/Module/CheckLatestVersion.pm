@@ -28,6 +28,11 @@ sub check_latest_version {
         $ENV{AUTOMATED_TESTING} ||
         $ENV{PERL_MODULE_CHECKLATESTVERSION_SKIP};
 
+    if (defined($opts->{do_check}) && !$opts->{do_check}) {
+        log($opts->{log_level}, "Skipping checking version of module $mod ...");
+        return;
+    }
+
     require Cache::File::Simple;
     my $cachekey = __PACKAGE__ . '|' . $mod;
     log($opts->{log_level}, "Checking version of module $mod from cache ...");
