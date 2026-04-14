@@ -47,7 +47,7 @@ sub check_latest_version {
     }
 
     if ($res->[2]{is_latest_version}) {
-        log($opts->{log_level}, "Module $mod is latest version ($res->[2]{latest_version})");
+        log($opts->{log_level}, "Module $mod (installed version: $res->[2]{installed_version}) is latest version ($res->[2]{latest_version})");
         # cache only positive result AND when version is defined
         if (defined($res->[2]{installed_version}) && defined($res->[2]{latest_version})) {
             log($opts->{log_level}, "Caching version check result ...");
@@ -59,7 +59,7 @@ sub check_latest_version {
             ") is not the latest version (" .
             (defined($res->[2]{latest_version}) ? $res->[2]{latest_version} : "undef") .
             ").";
-        if ($opts->{die}) {
+        if ($opts->{die} && defined $res->[2]{latest_version}) {
             $msg .= " Please update to the latest version first.";
             die $msg;
         } else {
