@@ -28,8 +28,6 @@ sub check_latest_version {
         $ENV{AUTOMATED_TESTING} ||
         $ENV{PERL_MODULE_CHECKLATESTVERSION_SKIP};
 
-    no strict 'refs'; ## no critic: TestingAndDebugging::ProhibitNoStrict
-
     require Cache::File::Simple;
     my $cachekey = __PACKAGE__ . '|' . $mod;
     log($opts->{log_level}, "Checking version of module $mod from cache ...");
