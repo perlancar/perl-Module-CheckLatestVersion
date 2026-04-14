@@ -29,7 +29,7 @@ sub check_latest_version {
         $ENV{PERL_MODULE_CHECKLATESTVERSION_SKIP};
 
     if (defined($opts->{do_check}) && !$opts->{do_check}) {
-        log($opts->{log_level}, "Skipping checking version of module $mod ...");
+        log('debug', "Skipping checking version of module $mod ...");
         return;
     }
 
