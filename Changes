@@ -1,3 +1,8 @@
+0.008   2026-04-14  Released-By: PERLANCAR; Urgency: medium
+
+        - Only cache result when versions are defined.
+
+
 0.007   2026-04-14  Released-By: PERLANCAR; Urgency: medium
 
         - Add 'do_check' option.
