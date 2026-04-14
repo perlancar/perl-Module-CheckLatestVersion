@@ -47,9 +47,12 @@ sub check_latest_version {
     }
 
     if ($res->[2]{is_latest_version}) {
-        log($opts->{log_level}, "Module $mod is latest version ($res->[2]{latest_version}), caching result ...");
-        # cache only positive result
-        Cache::File::Simple::cache($cachekey, $res);
+        log($opts->{log_level}, "Module $mod is latest version ($res->[2]{latest_version})");
+        # cache only positive result AND when version is defined
+        if (defined($res->[2]{installed_version}) && defined($res->[2]{latest_version})) {
+            log($opts->{log_level}, "Caching version check result ...");
+            Cache::File::Simple::cache($cachekey, $res);
+        }
     } else {
         my $msg = "Module $mod (installed version: " .
             (defined($res->[2]{installed_version}) ? $res->[2]{installed_version} : "undef") .
